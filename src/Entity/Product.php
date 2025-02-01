@@ -28,11 +28,11 @@ class Product
 
     #[ORM\ManyToOne(inversedBy: 'products')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?brand $brand = null;
+    private ?Brand $brand = null;
 
     #[ORM\ManyToOne(inversedBy: 'products')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?material $material = null;
+    private ?Material $material = null;
 
     public function getId(): ?int
     {
@@ -87,24 +87,24 @@ class Product
         return $this;
     }
 
-    public function getBrand(): ?brand
+    public function getBrand(): ?Brand
     {
         return $this->brand;
     }
 
-    public function setBrand(?brand $brand): static
+    public function setBrand(?Brand $brand): static
     {
         $this->brand = $brand;
 
         return $this;
     }
 
-    public function getMaterial(): ?material
+    public function getMaterial(): ?Material
     {
         return $this->material;
     }
 
-    public function setMaterial(?material $material): static
+    public function setMaterial(?Material $material): static
     {
         $this->material = $material;
 
