@@ -3,8 +3,8 @@
 {% block title %}Produkty{% endblock %}
 
 {% block body %}
-
-<table>
+<div class="table-container">
+    <table>
         <thead>
                 <tr>
                     <th>Kod</th>
@@ -24,7 +24,9 @@
                     <td>{{ product.price }}</td>
                     <td>{{ product.brand.name }}</td>
                     <td>{{ product.material.name }}</td>
-                </tr>
+                </tr>   
             {% endfor %}
-
+        </tbody>
+    </table>
+</div
 {% endblock %}
