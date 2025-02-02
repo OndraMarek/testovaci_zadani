@@ -56,3 +56,17 @@ tr:hover {
   padding: 10px;
   margin: 10px;
 }
+
+.form-container {
+  margin: 0 auto;
+  width: 75%;
+}
+
+.form-container input,
+textarea,
+select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}

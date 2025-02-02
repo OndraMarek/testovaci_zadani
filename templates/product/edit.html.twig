@@ -4,21 +4,26 @@
 
 <h1>Upravit produkt</h1>
 
-{{ form_start(form) }}
-    {{ form_row(form.code) }}
+<div class="back-container">
+    <a href="{{ path('product_index') }}">Zpět na produkty</a>
+</div>
+<div class="form-container">
+    {{ form_start(form) }}
+        {{ form_row(form.code) }}
 
-    {{ form_row(form.name) }}
+        {{ form_row(form.name) }}
 
-    {{ form_row(form.description) }}
+        {{ form_row(form.description) }}
 
-    {{ form_row(form.price) }}
+        {{ form_row(form.price) }}
 
-    {{ form_row(form.brand) }}
+        {{ form_row(form.brand) }}
 
-    {{ form_row(form.material) }}
+        {{ form_row(form.material) }}
 
-    {{ form_row(form.save, {'label' : 'Edit'}) }}
+        {{ form_row(form.save, {'label' : 'Edit'}) }}
 
-{{ form_end(form) }}
+    {{ form_end(form) }}
+</div>
 
 {% endblock %}
