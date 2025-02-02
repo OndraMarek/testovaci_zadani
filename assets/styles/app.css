@@ -33,3 +33,26 @@ tr:nth-child(even) {
 tr:hover {
   background-color: #ddd;
 }
+
+.pagination-container {
+  margin: 0 auto;
+  width: 80%;
+  display: flex;
+  justify-content: center;
+}
+
+.prev,
+.next {
+  color: black;
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.pages {
+  padding: 10px;
+  margin: 10px;
+}

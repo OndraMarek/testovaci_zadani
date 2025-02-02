@@ -3,6 +3,8 @@
 {% block title %}Produkty{% endblock %}
 
 {% block body %}
+
+<h1>Produkty</h1>
 <div class="table-container">
     <table>
         <thead>
@@ -13,6 +15,7 @@
                     <th>Cena</th>
                     <th>Znacka</th>
                     <th>Material</th>
+                    <th></th>
                 </tr>
         </thead>
         <tbody>
@@ -24,9 +27,19 @@
                     <td>{{ product.price }}</td>
                     <td>{{ product.brand.name }}</td>
                     <td>{{ product.material.name }}</td>
+                    <td><a href="">Upravit</a></td>
                 </tr>   
             {% endfor %}
         </tbody>
     </table>
-</div
+</div>
+<div class="pagination-container">
+    {% if currentPage > 1 %}
+        <a class='prev' href="{{ path('product_index', { page: currentPage - 1 }) }}">Předchozí</a>
+    {% endif %}
+        <p class='pages'>{{ currentPage }}/{{ totalPages }}</p>
+    {% if currentPage < totalPages %}
+        <a class='next' href="{{ path('product_index', { page: currentPage + 1 }) }}">Další</a>
+    {% endif %}
+</div>
 {% endblock %}
