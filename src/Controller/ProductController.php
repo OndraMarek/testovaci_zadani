@@ -21,10 +21,13 @@ final class ProductController extends AbstractController
         $limit = 10;
         $offset = ($page - 1) * $limit;
 
-        $sort = $request->query->get('sort', 'code');
+        $sort = $request->query->get('sort', 'name');
         $order = strtoupper($request->query->get('order', 'ASC')) === 'DESC' ? 'DESC' : 'ASC';
 
-        $paginator = $repository->findPaginatedSorted($offset, $limit, $sort, $order);
+        $filterField = $request->query->get('filter_field', 'name');
+        $filterValue = $request->query->get('filter_value', '');
+
+        $paginator = $repository->findPaginatedSortedFiltered($offset, $limit, $sort, $order, $filterField, $filterValue);
 
         return $this->render('product/index.html.twig', [
             'products' => $paginator,
@@ -32,8 +35,11 @@ final class ProductController extends AbstractController
             'totalPages' => ceil(count($paginator) / $limit),
             'sort' => $sort,
             'order' => $order,
+            'filter_field' => $filterField,
+            'filter_value' => $filterValue,
         ]);
     }
+
 
     #[Route('/{id<\d+>}/edit', name: 'product_edit')]
     public function edit(Product $product, Request $request, EntityManagerInterface $manager): Response

@@ -22,7 +22,22 @@
             <option value="DESC" {% if order == 'DESC' %}selected{% endif %}>Sestupně</option>
         </select>
     </div>
-    <button type="submit">Řadit</button>
+    
+    <div>
+        <label for="filter_field">Filtr podle:</label>
+        <select name="filter_field" id="filter_field">
+            <option value="name" {% if filter_field == 'name' %}selected{% endif %}>Nazev</option>
+            <option value="brand" {% if filter_field == 'brand' %}selected{% endif %}>Znacka</option>
+            <option value="material" {% if filter_field == 'material' %}selected{% endif %}>Material</option>
+        </select>
+    </div>
+    
+    <div>
+        <label for="filter_value">Hodnota filtru:</label>
+        <input type="text" name="filter_value" id="filter_value" value="{{ filter_value }}">
+    </div>
+
+    <button type="submit">Filtruj a řadit</button>
 </form>
 
 <div class="table-container">

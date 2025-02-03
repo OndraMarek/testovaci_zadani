@@ -17,19 +17,36 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
-    public function findPaginatedSorted(int $offset, int $limit, string $sort, string $order)
+    public function findPaginatedSortedFiltered(int $offset, int $limit, string $sort, string $order, string $filterField, string $filterValue)
     {
         $allowedSorts = ['code', 'name', 'price'];
         if (!in_array($sort, $allowedSorts)) {
             $sort = 'name';
         }
 
-        return new Paginator(
-            $this->createQueryBuilder('p')
-                ->orderBy('p.' . $sort, $order)
-                ->setFirstResult($offset)
-                ->setMaxResults($limit)
-                ->getQuery()
-        );
+        $queryBuilder = $this->createQueryBuilder('p')
+            ->orderBy('p.' . $sort, $order)
+            ->setFirstResult($offset)
+            ->setMaxResults($limit);
+
+        if ($filterValue) {
+            if ($filterField === 'brand') {
+                $queryBuilder
+                    ->leftJoin('p.brand', 'b')
+                    ->andWhere('b.name LIKE :filterValue')
+                    ->setParameter('filterValue', '%' . $filterValue . '%');
+            } elseif ($filterField === 'material') {
+                $queryBuilder
+                    ->leftJoin('p.material', 'm')
+                    ->andWhere('m.name LIKE :filterValue')
+                    ->setParameter('filterValue', '%' . $filterValue . '%');
+            } else {
+                $queryBuilder
+                    ->andWhere('p.name LIKE :filterValue')
+                    ->setParameter('filterValue', '%' . $filterValue . '%');
+            }
+        }
+
+        return new Paginator($queryBuilder->getQuery());
     }
 }
