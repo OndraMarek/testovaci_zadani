@@ -5,6 +5,26 @@
 {% block body %}
 
 <h1>Produkty</h1>
+
+<form method="get" action="{{ path('product_index') }}" class="sort-form">
+    <div>
+        <label for="sort">Seřadit podle:</label>
+        <select name="sort" id="sort">
+            <option value="code" {% if sort == 'code' %}selected{% endif %}>Kod</option>
+            <option value="name" {% if sort == 'name' %}selected{% endif %}>Nazev</option>
+            <option value="price" {% if sort == 'price' %}selected{% endif %}>Cena</option>
+        </select>
+    </div>
+    <div>
+        <label for="order">Pořadí:</label>
+        <select name="order" id="order">
+            <option value="ASC" {% if order == 'ASC' %}selected{% endif %}>Vzestupně</option>
+            <option value="DESC" {% if order == 'DESC' %}selected{% endif %}>Sestupně</option>
+        </select>
+    </div>
+    <button type="submit">Řadit</button>
+</form>
+
 <div class="table-container">
     <table>
         <thead>
@@ -35,11 +55,11 @@
 </div>
 <div class="pagination-container">
     {% if currentPage > 1 %}
-        <a class='prev' href="{{ path('product_index', { page: currentPage - 1 }) }}">Předchozí</a>
+        <a class='prev' href="{{ path('product_index', { page: currentPage - 1, sort: sort, order: order }) }}">Předchozí</a>
     {% endif %}
-        <p class='pages'>{{ currentPage }}/{{ totalPages }}</p>
+    <p class='pages'>{{ currentPage }}/{{ totalPages }}</p>
     {% if currentPage < totalPages %}
-        <a class='next' href="{{ path('product_index', { page: currentPage + 1 }) }}">Další</a>
+        <a class='next' href="{{ path('product_index', { page: currentPage + 1, sort: sort, order: order }) }}">Další</a>
     {% endif %}
 </div>
 {% endblock %}

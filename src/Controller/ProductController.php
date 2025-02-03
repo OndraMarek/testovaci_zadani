@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Repository\ProductRepository;
 use App\Entity\Product;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,19 +21,20 @@ final class ProductController extends AbstractController
         $limit = 10;
         $offset = ($page - 1) * $limit;
 
-        $query = $repository->createQueryBuilder('p')
-            ->setFirstResult($offset)
-            ->setMaxResults($limit)
-            ->getQuery();
+        $sort = $request->query->get('sort', 'code');
+        $order = strtoupper($request->query->get('order', 'ASC')) === 'DESC' ? 'DESC' : 'ASC';
 
-        $paginator = new Paginator($query);
+        $paginator = $repository->findPaginatedSorted($offset, $limit, $sort, $order);
 
         return $this->render('product/index.html.twig', [
             'products' => $paginator,
             'currentPage' => $page,
             'totalPages' => ceil(count($paginator) / $limit),
+            'sort' => $sort,
+            'order' => $order,
         ]);
     }
+
     #[Route('/{id<\d+>}/edit', name: 'product_edit')]
     public function edit(Product $product, Request $request, EntityManagerInterface $manager): Response
     {
