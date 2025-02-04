@@ -22,7 +22,7 @@ final class ProductController extends AbstractController
         $sortingData = $this->getSortingData($request);
         $filterData = $this->getFilterData($request);
 
-        $paginator = $repository->findPaginatedSortedFiltered(
+        $products = $repository->findPaginatedSortedFiltered(
             $paginationData['offset'],
             $paginationData['limit'],
             $sortingData['sort'],
@@ -32,9 +32,9 @@ final class ProductController extends AbstractController
         );
 
         return $this->render('product/index.html.twig', [
-            'products' => $paginator,
+            'products' => $products,
             'currentPage' => $paginationData['page'],
-            'totalPages' => ceil(count($paginator) / $paginationData['limit']),
+            'totalPages' => ceil(count($products) / $paginationData['limit']),
             'sort' => $sortingData['sort'],
             'order' => $sortingData['order'],
             'filter_field' => $filterData['filterField'],
@@ -55,23 +55,8 @@ final class ProductController extends AbstractController
             $filterData['filterValue']
         );
 
-        $response = new StreamedResponse(function () use ($products) {
-            $handle = fopen('php://output', 'w');
-
-            fputcsv($handle, ['ID', 'Kód', 'Název', 'Cena', 'Značka', 'Materiál']);
-
-            foreach ($products as $product) {
-                fputcsv($handle, [
-                    $product->getId(),
-                    $product->getCode(),
-                    $product->getName(),
-                    $product->getPrice(),
-                    $product->getBrand() ? $product->getBrand()->getName() : '',
-                    $product->getMaterial() ? $product->getMaterial()->getName() : '',
-                ]);
-            }
-
-            fclose($handle);
+        $response = new StreamedResponse(function () use ($products): void {
+            $this->generateCsvContent($products);
         });
 
         $response->headers->set('Content-Type', 'text/csv; charset=UTF-8');
@@ -136,5 +121,25 @@ final class ProductController extends AbstractController
             'filterField' => $filterField,
             'filterValue' => $filterValue,
         ];
+    }
+
+    private function generateCsvContent($products): void
+    {
+        $handle = fopen('php://output', 'w');
+
+        fputcsv($handle, ['ID', 'Kód', 'Název', 'Cena', 'Značka', 'Materiál']);
+
+        foreach ($products as $product) {
+            fputcsv($handle, [
+                $product->getId(),
+                $product->getCode(),
+                $product->getName(),
+                $product->getPrice(),
+                $product->getBrand() ? $product->getBrand()->getName() : '',
+                $product->getMaterial() ? $product->getMaterial()->getName() : '',
+            ]);
+        }
+
+        fclose($handle);
     }
 }
