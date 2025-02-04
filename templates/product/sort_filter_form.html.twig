@@ -1,0 +1,44 @@
+<div class="form-export-container">
+    <form method="get" action="{{ path('product_index') }}" class="sort-filter-form">
+        <div class="sort-input">
+            <div>
+                <label for="sort">Seřadit podle:</label>
+                <select name="sort" id="sort">
+                    <option value="code" {% if sort == 'code' %}selected{% endif %}>Kod</option>
+                    <option value="name" {% if sort == 'name' %}selected{% endif %}>Nazev</option>
+                    <option value="price" {% if sort == 'price' %}selected{% endif %}>Cena</option>
+                </select>
+            </div>
+            <div>
+                <label for="order">Pořadí:</label>
+                <select name="order" id="order">
+                    <option value="ASC" {% if order == 'ASC' %}selected{% endif %}>Vzestupně</option>
+                    <option value="DESC" {% if order == 'DESC' %}selected{% endif %}>Sestupně</option>
+                </select>
+            </div>
+        </div>
+        <div class="filter-input">
+            <div>
+                <label for="filter_field">Filtr podle:</label>
+                <select name="filter_field" id="filter_field">
+                    <option value="name" {% if filter_field == 'name' %}selected{% endif %}>Nazev</option>
+                    <option value="brand" {% if filter_field == 'brand' %}selected{% endif %}>Znacka</option>
+                    <option value="material" {% if filter_field == 'material' %}selected{% endif %}>Material</option>
+                </select>
+            </div>
+            <div>
+                <label for="filter_value">Hodnota filtru:</label>
+                <input type="text" name="filter_value" id="filter_value" value="{{ filter_value }}">
+            </div>
+        </div>
+        <button type="submit">Filtrovat a řadit</button>
+    </form>
+    <a href="{{ path('product_export_csv', {
+        'sort': sort, 
+        'order': order, 
+        'filter_field': filter_field, 
+        'filter_value': filter_value
+    }) }}">
+        Exportovat CSV
+    </a>
+</div>

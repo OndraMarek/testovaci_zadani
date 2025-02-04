@@ -22,11 +22,11 @@ class ProductType extends AbstractType
             ->add('price')
             ->add('brand', EntityType::class, [
                 'class' => Brand::class,
-                'choice_label' => 'id',
+                'choice_label' => 'name',
             ])
             ->add('material', EntityType::class, [
                 'class' => Material::class,
-                'choice_label' => 'id',
+                'choice_label' => 'name',
             ])
             ->add('save', SubmitType::class)
         ;
