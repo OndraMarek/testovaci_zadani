@@ -1,0 +1,28 @@
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th class="code">Kod</th>
+                <th class="name">Nazev</th>
+                <th class="description">Popis</th>
+                <th class="price">Cena</th>
+                <th class="brand">Znacka</th>
+                <th class="material">Material</th>
+                <th class="edit"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+                <tr>
+                    <td class="code">{{ product.code }}</td>
+                    <td class="name">{{ product.name }}</td>
+                    <td class="description">{{ product.description }}</td>
+                    <td class="price">{{ product.price }}</td>
+                    <td class="brand">{{ product.brand.name }}</td>
+                    <td class="material">{{ product.material.name }}</td>
+                    <td class="edit"><a href="{{ path('product_edit', {'id': product.id}) }}">Upravit</a></td>
+                </tr>   
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
