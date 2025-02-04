@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Form\ProductType;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 
 final class ProductController extends AbstractController
@@ -41,6 +42,43 @@ final class ProductController extends AbstractController
         ]);
     }
 
+    #[Route('/export/csv', name: 'product_export_csv')]
+    public function exportCsv(ProductRepository $repository, Request $request): StreamedResponse
+    {
+        $sortingData = $this->getSortingData($request);
+        $filterData = $this->getFilterData($request);
+
+        $products = $repository->findSortedFiltered(
+            $sortingData['sort'],
+            $sortingData['order'],
+            $filterData['filterField'],
+            $filterData['filterValue']
+        );
+
+        $response = new StreamedResponse(function () use ($products) {
+            $handle = fopen('php://output', 'w');
+
+            fputcsv($handle, ['ID', 'Kód', 'Název', 'Cena', 'Značka', 'Materiál']);
+
+            foreach ($products as $product) {
+                fputcsv($handle, [
+                    $product->getId(),
+                    $product->getCode(),
+                    $product->getName(),
+                    $product->getPrice(),
+                    $product->getBrand() ? $product->getBrand()->getName() : '',
+                    $product->getMaterial() ? $product->getMaterial()->getName() : '',
+                ]);
+            }
+
+            fclose($handle);
+        });
+
+        $response->headers->set('Content-Type', 'text/csv; charset=UTF-8');
+        $response->headers->set('Content-Disposition', 'attachment; filename="products.csv"');
+
+        return $response;
+    }
 
     #[Route('/{id<\d+>}/edit', name: 'product_edit')]
     public function edit(Product $product, Request $request, EntityManagerInterface $manager): Response

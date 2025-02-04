@@ -29,6 +29,14 @@ class ProductRepository extends ServiceEntityRepository
         return new Paginator($queryBuilder->getQuery());
     }
 
+    public function findSortedFiltered(string $sort, string $order, string $filterField, string $filterValue): array
+    {
+        $queryBuilder = $this->createQueryBuilder('p');
+        $this->findSorted($queryBuilder, $sort, $order);
+        $this->findFiltered($queryBuilder, $filterField, $filterValue);
+        return $queryBuilder->getQuery()->getResult();
+    }
+
     private function findSorted(QueryBuilder $queryBuilder, string $sort, string $order): void
     {
         $allowedSorts = ['code', 'name', 'price'];
