@@ -117,3 +117,17 @@ textarea {
   border-radius: 5px;
   background-color: #f9f9f9;
 }
+
+.sort-ipnut,
+.filter-input {
+  padding: 10px 20px 10px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sort-filter-form {
+  margin: 0 auto;
+  display: flex;
+
+  width: 75%;
+}
