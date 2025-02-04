@@ -53,7 +53,7 @@ final class ProductController extends AbstractController
 
             $this->addFlash(
                 'notice',
-                'Product updated successfully!'
+                'Produkt byl úspěšně upraven.'
             );
 
             return $this->redirectToRoute('product_index');
