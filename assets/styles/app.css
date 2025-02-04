@@ -12,6 +12,7 @@ body {
 table {
   width: 100%;
   border-collapse: collapse;
+  table-layout: fixed;
 }
 
 th,
@@ -19,6 +20,8 @@ td {
   border: 1px solid #ddd;
   padding: 15px;
   text-align: left;
+  word-wrap: break-word;
+  height: 30px;
 }
 
 th {
@@ -28,6 +31,41 @@ th {
 
 tr:nth-child(even) {
   background-color: #f9f9f9;
+}
+
+th.code,
+td.code {
+  width: 10%;
+}
+
+th.name,
+td.name {
+  width: 20%;
+}
+
+th.description,
+td.description {
+  width: 30%;
+}
+
+th.price,
+td.price {
+  width: 10%;
+}
+
+th.brand,
+td.brand {
+  width: 15%;
+}
+
+th.material,
+td.material {
+  width: 15%;
+}
+
+th.edit,
+td.edit {
+  width: 5%;
 }
 
 tr:hover {

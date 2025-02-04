@@ -37,32 +37,32 @@
         <input type="text" name="filter_value" id="filter_value" value="{{ filter_value }}">
     </div>
 
-    <button type="submit">Filtruj a řadit</button>
+    <button type="submit">Filtrovat a řadit</button>
 </form>
 
 <div class="table-container">
     <table>
         <thead>
                 <tr>
-                    <th>Kod</th>
-                    <th>Nazev</th>
-                    <th>Popis</th>
-                    <th>Cena</th>
-                    <th>Znacka</th>
-                    <th>Material</th>
-                    <th></th>
+                    <th class="code">Kod</th>
+                    <th class="name">Nazev</th>
+                    <th class="description">Popis</th>
+                    <th class="price">Cena</th>
+                    <th class="brand">Znacka</th>
+                    <th class="material">Material</th>
+                    <th class="edit"></th>
                 </tr>
         </thead>
         <tbody>
             {% for product in products %}
                 <tr>
-                    <td>{{ product.code }}</td>
-                    <td>{{ product.name }}</td>
-                    <td>{{ product.description }}</td>
-                    <td>{{ product.price }}</td>
-                    <td>{{ product.brand.name }}</td>
-                    <td>{{ product.material.name }}</td>
-                    <td><a href="{{ path('product_edit', {'id': product.id}) }}">Upravit</a></td>
+                    <td class="code">{{ product.code }}</td>
+                    <td class="name">{{ product.name }}</td>
+                    <td class="description">{{ product.description }}</td>
+                    <td class="price">{{ product.price }}</td>
+                    <td class="brand">{{ product.brand.name }}</td>
+                    <td class="material">{{ product.material.name }}</td>
+                    <td class="edit"><a href="{{ path('product_edit', {'id': product.id}) }}">Upravit</a></td>
                 </tr>   
             {% endfor %}
         </tbody>
