@@ -126,7 +126,13 @@ textarea {
 }
 
 .sort-filter-form {
-  margin: 0 auto;
+  margin: 10px 10px 10px 10px;
   display: flex;
   width: 75%;
+}
+
+.from-export-container {
+  display: flex;
+  width: 75%;
+  margin: 0 auto;
 }
