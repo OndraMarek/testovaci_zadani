@@ -6,6 +6,7 @@ use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Tools\Pagination\Paginator;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * @extends ServiceEntityRepository<Product>
@@ -19,34 +20,53 @@ class ProductRepository extends ServiceEntityRepository
 
     public function findPaginatedSortedFiltered(int $offset, int $limit, string $sort, string $order, string $filterField, string $filterValue)
     {
+        $queryBuilder = $this->createQueryBuilder('p');
+
+        $this->findSorted($queryBuilder, $sort, $order);
+        $this->findFiltered($queryBuilder, $filterField, $filterValue);
+        $this->findPaginated($queryBuilder, $offset, $limit);
+
+        return new Paginator($queryBuilder->getQuery());
+    }
+
+    private function findSorted(QueryBuilder $queryBuilder, string $sort, string $order): void
+    {
         $allowedSorts = ['code', 'name', 'price'];
         if (!in_array($sort, $allowedSorts)) {
             $sort = 'name';
         }
 
-        $queryBuilder = $this->createQueryBuilder('p')
-            ->orderBy('p.' . $sort, $order)
-            ->setFirstResult($offset)
-            ->setMaxResults($limit);
+        $queryBuilder->orderBy('p.' . $sort, $order);
+    }
 
-        if ($filterValue) {
-            if ($filterField === 'brand') {
-                $queryBuilder
-                    ->leftJoin('p.brand', 'b')
-                    ->andWhere('b.name LIKE :filterValue')
-                    ->setParameter('filterValue', '%' . $filterValue . '%');
-            } elseif ($filterField === 'material') {
-                $queryBuilder
-                    ->leftJoin('p.material', 'm')
-                    ->andWhere('m.name LIKE :filterValue')
-                    ->setParameter('filterValue', '%' . $filterValue . '%');
-            } else {
-                $queryBuilder
-                    ->andWhere('p.name LIKE :filterValue')
-                    ->setParameter('filterValue', '%' . $filterValue . '%');
-            }
+    private function findFiltered(QueryBuilder $queryBuilder, string $filterField, string $filterValue): void
+    {
+        if (empty($filterValue)) {
+            return;
         }
 
-        return new Paginator($queryBuilder->getQuery());
+        switch ($filterField) {
+            case 'brand':
+                $queryBuilder
+                    ->leftJoin('p.brand', 'b')
+                    ->andWhere('b.name LIKE :filterValue');
+                break;
+            case 'material':
+                $queryBuilder
+                    ->leftJoin('p.material', 'm')
+                    ->andWhere('m.name LIKE :filterValue');
+                break;
+            default:
+                $queryBuilder
+                    ->andWhere('p.name LIKE :filterValue');
+        }
+
+        $queryBuilder->setParameter('filterValue', '%' . $filterValue . '%');
     }
+
+    private function findPaginated(QueryBuilder $queryBuilder, int $offset, int $limit): void
+    {
+        $queryBuilder->setFirstResult($offset)->setMaxResults($limit);
+    }
+
 }

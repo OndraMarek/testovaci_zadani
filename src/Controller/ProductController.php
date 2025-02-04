@@ -17,26 +17,27 @@ final class ProductController extends AbstractController
     #[Route('/', name: 'product_index')]
     public function index(ProductRepository $repository, Request $request): Response
     {
-        $page = max(1, $request->query->getInt('page', 1));
-        $limit = 10;
-        $offset = ($page - 1) * $limit;
+        $paginationData = $this->getPaginationData($request);
+        $sortingData = $this->getSortingData($request);
+        $filterData = $this->getFilterData($request);
 
-        $sort = $request->query->get('sort', 'name');
-        $order = strtoupper($request->query->get('order', 'ASC')) === 'DESC' ? 'DESC' : 'ASC';
-
-        $filterField = $request->query->get('filter_field', 'name');
-        $filterValue = $request->query->get('filter_value', '');
-
-        $paginator = $repository->findPaginatedSortedFiltered($offset, $limit, $sort, $order, $filterField, $filterValue);
+        $paginator = $repository->findPaginatedSortedFiltered(
+            $paginationData['offset'],
+            $paginationData['limit'],
+            $sortingData['sort'],
+            $sortingData['order'],
+            $filterData['filterField'],
+            $filterData['filterValue']
+        );
 
         return $this->render('product/index.html.twig', [
             'products' => $paginator,
-            'currentPage' => $page,
-            'totalPages' => ceil(count($paginator) / $limit),
-            'sort' => $sort,
-            'order' => $order,
-            'filter_field' => $filterField,
-            'filter_value' => $filterValue,
+            'currentPage' => $paginationData['page'],
+            'totalPages' => ceil(count($paginator) / $paginationData['limit']),
+            'sort' => $sortingData['sort'],
+            'order' => $sortingData['order'],
+            'filter_field' => $filterData['filterField'],
+            'filter_value' => $filterData['filterValue'],
         ]);
     }
 
@@ -62,5 +63,40 @@ final class ProductController extends AbstractController
         return $this->render('product/edit.html.twig', [
             'form' => $form,
         ]);
+    }
+
+    private function getPaginationData(Request $request): array
+    {
+        $page = max(1, $request->query->getInt('page', 1));
+        $limit = 10;
+        $offset = ($page - 1) * $limit;
+
+        return [
+            'page' => $page,
+            'limit' => $limit,
+            'offset' => $offset,
+        ];
+    }
+
+    private function getSortingData(Request $request): array
+    {
+        $sort = $request->query->get('sort', 'name');
+        $order = strtoupper($request->query->get('order', 'ASC')) === 'DESC' ? 'DESC' : 'ASC';
+
+        return [
+            'sort' => $sort,
+            'order' => $order,
+        ];
+    }
+
+    private function getFilterData(Request $request): array
+    {
+        $filterField = $request->query->get('filter_field', 'name');
+        $filterValue = $request->query->get('filter_value', '');
+
+        return [
+            'filterField' => $filterField,
+            'filterValue' => $filterValue,
+        ];
     }
 }
