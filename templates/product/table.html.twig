@@ -20,7 +20,7 @@
                     <td class="price">{{ product.price }}</td>
                     <td class="brand">{{ product.brand.name }}</td>
                     <td class="material">{{ product.material.name }}</td>
-                    <td class="edit"><a href="{{ path('product_edit', {'id': product.id}) }}">Upravit</a></td>
+                    <td class="edit"><a class="edit-button" href="{{ path('product_edit', {'id': product.id}) }}">Upravit</a></td>
                 </tr>   
             {% endfor %}
         </tbody>

@@ -33,12 +33,14 @@
         </div>
         <button type="submit">Filtrovat a řadit</button>
     </form>
-    <a href="{{ path('product_export_csv', {
-        'sort': sort, 
-        'order': order, 
-        'filter_field': filter_field, 
-        'filter_value': filter_value
-    }) }}">
-        Exportovat CSV
-    </a>
+    <div class="button-container">
+        <a class="button" href="{{ path('product_export_csv', {
+            'sort': sort, 
+            'order': order, 
+            'filter_field': filter_field, 
+            'filter_value': filter_value
+        }) }}">
+            Exportovat CSV
+        </a>
+    </div>
 </div>
