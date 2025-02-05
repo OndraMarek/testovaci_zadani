@@ -6,7 +6,7 @@ body {
 
 h1 {
   text-align: center;
-  margin: 10px 0 10px 0;
+  margin: 10px 0;
 }
 
 .table-container {
@@ -36,6 +36,10 @@ th {
 
 tr:nth-child(even) {
   background-color: #f9f9f9;
+}
+
+tr:hover {
+  background-color: #ddd;
 }
 
 th.code,
@@ -71,10 +75,6 @@ td.material {
 th.edit,
 td.edit {
   width: 8%;
-}
-
-tr:hover {
-  background-color: #ddd;
 }
 
 .pagination-container {
@@ -121,79 +121,6 @@ tr:hover {
   margin: 0 auto;
 }
 
-.button {
-  line-height: 1.5;
-  cursor: pointer;
-  border: 1px solid transparent;
-  padding: 0.7rem 1rem;
-  font-size: 1rem;
-  border-radius: 0.25rem;
-  color: #fff;
-  background-color: #198754;
-  border-color: #198754;
-  height: 100%;
-  text-decoration: none;
-}
-
-.edit-button {
-  line-height: 1.5;
-  cursor: pointer;
-  border: 1px solid transparent;
-  padding: 0.7rem 1rem;
-  font-size: 1rem;
-  border-radius: 0.25rem;
-  color: #fff;
-  background-color: #0d6efd;
-  border-color: #0d6efd;
-  height: 100%;
-  text-decoration: none;
-}
-
-.notice {
-  margin: 0 auto;
-  width: 75%;
-  padding: 10px;
-  text-align: center;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #f9f9f9;
-}
-
-.sort-input,
-.filter-input {
-  padding: 10px 20px 10px 20px;
-  display: flex;
-  flex-direction: column;
-}
-
-.sort-input select,
-.filter-input select,
-.filter-input input {
-  padding: 0.2rem 2rem 0.3rem 0.5rem;
-  font-size: 1rem;
-  border: 1px solid #ced4da;
-  margin: 4px 0;
-  box-sizing: border-box;
-}
-
-.filter-input input {
-  width: 8rem;
-}
-
-.sort-filter-form {
-  margin: 10px 10px 10px 10px;
-  display: flex;
-  width: 75%;
-  align-items: center;
-}
-
-.form-export-container {
-  display: flex;
-  width: 75%;
-  margin: 0 auto;
-  align-items: center;
-}
-
 .form-input {
   display: block;
   width: 100%;
@@ -219,4 +146,71 @@ tr:hover {
 
 .form-label {
   margin-bottom: 0.5em;
+}
+
+.button,
+.edit-button {
+  line-height: 1.5;
+  cursor: pointer;
+  border: 1px solid transparent;
+  padding: 0.7rem 1rem;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+  color: #fff;
+  text-decoration: none;
+}
+
+.button {
+  background-color: #198754;
+  border-color: #198754;
+}
+
+.edit-button {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+
+.notice {
+  margin: 0 auto;
+  width: 75%;
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.sort-input,
+.filter-input {
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sort-input select,
+.filter-input select,
+.filter-input input {
+  padding: 0.2rem 2rem 0.3rem 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ced4da;
+  margin: 4px 0;
+  box-sizing: border-box;
+}
+
+.filter-input input {
+  width: 8rem;
+}
+
+.sort-filter-form {
+  margin: 10px;
+  display: flex;
+  width: 75%;
+  align-items: center;
+}
+
+.form-export-container {
+  display: flex;
+  width: 75%;
+  margin: 0 auto;
+  align-items: center;
 }
