@@ -45,12 +45,12 @@ td.code {
 
 th.name,
 td.name {
-  width: 20%;
+  width: 25%;
 }
 
 th.description,
 td.description {
-  width: 30%;
+  width: 32%;
 }
 
 th.price,
@@ -60,7 +60,7 @@ td.price {
 
 th.brand,
 td.brand {
-  width: 15%;
+  width: 10%;
 }
 
 th.material,
@@ -70,7 +70,7 @@ td.material {
 
 th.edit,
 td.edit {
-  width: 10%;
+  width: 8%;
 }
 
 tr:hover {
