@@ -9,21 +9,48 @@
 </div>
 <div class="form-container">
     {{ form_start(form) }}
-        {{ form_row(form.code) }}
+    {{ form_row(form.code, {
+        'label_attr': {'class': 'form-label'},
+        'attr': {'class': 'form-input'},
+        'label': 'Kód'
+    }) }}
 
-        {{ form_row(form.name) }}
+    {{ form_row(form.name, {
+        'label_attr': {'class': 'form-label'},
+        'attr': {'class': 'form-input'},
+        'label': 'Název'
+    }) }}
 
-        {{ form_row(form.description) }}
+    {{ form_row(form.description, {
+        'label_attr': {'class': 'form-label'},
+        'attr': {'class': 'form-input'},
+        'label': 'Popis'
+    }) }}
 
-        {{ form_row(form.price) }}
+    {{ form_row(form.price, {
+        'label_attr': {'class': 'form-label'},
+        'attr': {'class': 'form-input'},
+        'label': 'Cena'
+    }) }}
 
-        {{ form_row(form.brand) }}
+    {{ form_row(form.brand, {
+        'label_attr': {'class': 'form-label'},
+        'attr': {'class': 'form-select'},
+        'label': 'Značka'
+        
+    }) }}
 
-        {{ form_row(form.material) }}
+    {{ form_row(form.material, {
+        'label_attr': {'class': 'form-label'},
+        'attr': {'class': 'form-select'},
+        'label': 'Material'
+    }) }}
 
-        {{ form_row(form.save, {'label' : 'Edit'}) }}
-
-    {{ form_end(form) }}
+    {{ form_row(form.save, {
+        'attr': {'class': 'form-button'},
+        'label': 'Edit'
+    }) }}
+{{ form_end(form) }}
 </div>
 
 {% endblock %}

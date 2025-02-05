@@ -1,11 +1,13 @@
 <div class="pagination-container">
     {% if currentPage > 1 %}
-        <a class='prev' href="{{ path('product_index', { page: currentPage - 1, sort: sort, order: order,
-        filter_field: filter_field, filter_value: filter_value }) }}">Předchozí</a>
+        <a class='prev' href="{{ path('product_index', { page: currentPage - 1, sort: sort, order: order, filter_field: filter_field, filter_value: filter_value }) }}">Předchozí</a>
+    {% else %}
+        <span class='prev' style="visibility: hidden;">Předchozí</span>
     {% endif %}
     <p class='pages'>{{ currentPage }}/{{ totalPages }}</p>
     {% if currentPage < totalPages %}
-        <a class='next' href="{{ path('product_index', { page: currentPage + 1, sort: sort, order: order,
-        filter_field: filter_field, filter_value: filter_value }) }}">Další</a>
+        <a class='next' href="{{ path('product_index', { page: currentPage + 1, sort: sort, order: order, filter_field: filter_field, filter_value: filter_value }) }}">Další</a>
+    {% else %}
+        <span class='next' style="visibility: hidden;">Další</span>
     {% endif %}
 </div>
