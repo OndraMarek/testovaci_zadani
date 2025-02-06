@@ -42,29 +42,6 @@ final class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/export/csv', name: 'product_export_csv')]
-    public function exportCsv(ProductRepository $repository, Request $request): StreamedResponse
-    {
-        $sortingData = $this->getSortingData($request);
-        $filterData = $this->getFilterData($request);
-
-        $products = $repository->findSortedFiltered(
-            $sortingData['sort'],
-            $sortingData['order'],
-            $filterData['filterField'],
-            $filterData['filterValue']
-        );
-
-        $response = new StreamedResponse(function () use ($products): void {
-            $this->generateCsvContent($products);
-        });
-
-        $response->headers->set('Content-Type', 'text/csv; charset=UTF-8');
-        $response->headers->set('Content-Disposition', 'attachment; filename="products.csv"');
-
-        return $response;
-    }
-
     #[Route('/{id<\d+>}/edit', name: 'product_edit')]
     public function edit(Product $product, Request $request, EntityManagerInterface $manager): Response
     {
@@ -86,6 +63,29 @@ final class ProductController extends AbstractController
         return $this->render('product/edit.html.twig', [
             'form' => $form,
         ]);
+    }
+
+    #[Route('/export/csv', name: 'product_export_csv')]
+    public function exportCsv(ProductRepository $repository, Request $request): StreamedResponse
+    {
+        $sortingData = $this->getSortingData($request);
+        $filterData = $this->getFilterData($request);
+
+        $products = $repository->findSortedFiltered(
+            $sortingData['sort'],
+            $sortingData['order'],
+            $filterData['filterField'],
+            $filterData['filterValue']
+        );
+
+        $response = new StreamedResponse(function () use ($products): void {
+            $this->generateCsvContent($products);
+        });
+
+        $response->headers->set('Content-Type', 'text/csv; charset=UTF-8');
+        $response->headers->set('Content-Disposition', 'attachment; filename="products.csv"');
+
+        return $response;
     }
 
     private function getPaginationData(Request $request): array
