@@ -59,7 +59,7 @@ td.description {
 
 th.price,
 td.price {
-  width: 10%;
+  width: 6%;
 }
 
 th.brand,
@@ -74,7 +74,9 @@ td.material {
 
 th.edit,
 td.edit {
-  width: 8%;
+  width: 12%;
+  text-align: center;
+  vertical-align: middle;
 }
 
 .pagination-container {
