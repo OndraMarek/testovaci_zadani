@@ -15,30 +15,31 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 final class ProductController extends AbstractController
 {
+
     #[Route('/', name: 'product_index')]
     public function index(ProductRepository $repository, Request $request): Response
     {
-        $paginationData = $this->getPaginationData($request);
-        $sortingData = $this->getSortingData($request);
-        $filterData = $this->getFilterData($request);
+        [$page, $limit, $offset] = $this->getPaginationParams($request);
+        [$sort, $order] = $this->getSortingParams($request);
+        [$filterField, $filterValue] = $this->getFilteringParams($request);
 
         $products = $repository->findPaginatedSortedFiltered(
-            $paginationData['offset'],
-            $paginationData['limit'],
-            $sortingData['sort'],
-            $sortingData['order'],
-            $filterData['filterField'],
-            $filterData['filterValue']
+            $offset,
+            $limit,
+            $sort,
+            $order,
+            $filterField,
+            $filterValue
         );
 
         return $this->render('product/index.html.twig', [
             'products' => $products,
-            'currentPage' => $paginationData['page'],
-            'totalPages' => ceil(count($products) / $paginationData['limit']),
-            'sort' => $sortingData['sort'],
-            'order' => $sortingData['order'],
-            'filter_field' => $filterData['filterField'],
-            'filter_value' => $filterData['filterValue'],
+            'currentPage' => $page,
+            'totalPages' => ceil(count($products) / $limit),
+            'sort' => $sort,
+            'order' => $order,
+            'filter_field' => $filterField,
+            'filter_value' => $filterValue,
         ]);
     }
 
@@ -68,14 +69,14 @@ final class ProductController extends AbstractController
     #[Route('/export/csv', name: 'product_export_csv')]
     public function exportCsv(ProductRepository $repository, Request $request): StreamedResponse
     {
-        $sortingData = $this->getSortingData($request);
-        $filterData = $this->getFilterData($request);
+        [$sort, $order] = $this->getSortingParams($request);
+        [$filterField, $filterValue] = $this->getFilteringParams($request);
 
         $products = $repository->findSortedFiltered(
-            $sortingData['sort'],
-            $sortingData['order'],
-            $filterData['filterField'],
-            $filterData['filterValue']
+            $sort,
+            $order,
+            $filterField,
+            $filterValue
         );
 
         $response = new StreamedResponse(function () use ($products): void {
@@ -88,39 +89,29 @@ final class ProductController extends AbstractController
         return $response;
     }
 
-    private function getPaginationData(Request $request): array
+    private function getPaginationParams(Request $request): array
     {
         $page = max(1, $request->query->getInt('page', 1));
         $limit = 10;
         $offset = ($page - 1) * $limit;
 
-        return [
-            'page' => $page,
-            'limit' => $limit,
-            'offset' => $offset,
-        ];
+        return [$page, $limit, $offset];
     }
 
-    private function getSortingData(Request $request): array
+    private function getSortingParams(Request $request): array
     {
         $sort = $request->query->get('sort', 'name');
         $order = strtoupper($request->query->get('order', 'ASC')) === 'DESC' ? 'DESC' : 'ASC';
 
-        return [
-            'sort' => $sort,
-            'order' => $order,
-        ];
+        return [$sort, $order];
     }
 
-    private function getFilterData(Request $request): array
+    private function getFilteringParams(Request $request): array
     {
         $filterField = $request->query->get('filter_field', 'name');
         $filterValue = $request->query->get('filter_value', '');
 
-        return [
-            'filterField' => $filterField,
-            'filterValue' => $filterValue,
-        ];
+        return [$filterField, $filterValue];
     }
 
     private function generateCsvContent($products): void

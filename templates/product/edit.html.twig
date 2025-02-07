@@ -45,11 +45,11 @@
         }) }}
 
         {{ form_row(form.save, {
-            'attr': {'class': 'form-button'},
+            'attr': {'class': 'edit-button button'},
             'label': 'Edit'
         }) }}
     {{ form_end(form) }}
-    <a class="button" href="{{ path('product_index') }}">Zpět</a>
+    <a class="back" href="{{ path('product_index') }}">Zpět</a>
 </div>
 
 {% endblock %}

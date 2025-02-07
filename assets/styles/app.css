@@ -87,7 +87,8 @@ td.edit {
 
 .prev,
 .next,
-.form-export-container button {
+.back,
+.sort-export {
   color: black;
   padding: 10px;
   margin: 10px;
@@ -148,8 +149,7 @@ td.edit {
   margin-bottom: 0.5em;
 }
 
-.button,
-.edit-button {
+.button {
   line-height: 1.5;
   cursor: pointer;
   border: 1px solid transparent;
@@ -160,7 +160,7 @@ td.edit {
   text-decoration: none;
 }
 
-.button {
+.export-button {
   background-color: #198754;
   border-color: #198754;
 }
