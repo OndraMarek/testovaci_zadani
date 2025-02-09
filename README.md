@@ -9,6 +9,6 @@
 3. Importujte databázi
 4. Spusťte vývojový server:
    ```bash
-   symfony serve
+   php -S localhost:8000 -t public public/index.php
     
   
