@@ -4,8 +4,8 @@
             <div>
                 <label for="sort">Seřadit podle:</label>
                 <select name="sort" id="sort">
-                    <option value="code" {% if sort == 'code' %}selected{% endif %}>Kod</option>
-                    <option value="name" {% if sort == 'name' %}selected{% endif %}>Nazev</option>
+                    <option value="code" {% if sort == 'code' %}selected{% endif %}>Kód</option>
+                    <option value="name" {% if sort == 'name' %}selected{% endif %}>Název</option>
                     <option value="price" {% if sort == 'price' %}selected{% endif %}>Cena</option>
                 </select>
             </div>
@@ -21,8 +21,8 @@
             <div>
                 <label for="filter_field">Filtr podle:</label>
                 <select name="filter_field" id="filter_field">
-                    <option value="name" {% if filter_field == 'name' %}selected{% endif %}>Nazev</option>
-                    <option value="brand" {% if filter_field == 'brand' %}selected{% endif %}>Znacka</option>
+                    <option value="name" {% if filter_field == 'name' %}selected{% endif %}>Název</option>
+                    <option value="brand" {% if filter_field == 'brand' %}selected{% endif %}>Značka</option>
                     <option value="material" {% if filter_field == 'material' %}selected{% endif %}>Material</option>
                 </select>
             </div>

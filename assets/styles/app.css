@@ -108,6 +108,7 @@ td.edit {
 .form-container {
   margin: 0 auto;
   width: 50%;
+  max-width: 500px;
 }
 
 .form-container button {
@@ -124,25 +125,16 @@ td.edit {
   margin: 0 auto;
 }
 
-.form-input {
-  display: block;
-  width: 100%;
-  padding: 0.375rem 0.75rem;
-  font-size: 1rem;
-  line-height: 1.5;
-  border: 1px solid #ced4da;
-  margin: 8px 0;
-  box-sizing: border-box;
-}
-
+.form-input,
 .form-select {
+  font-family: Arial, sans-serif;
   display: block;
   width: 100%;
   padding: 0.375rem 2.25rem 0.375rem 0.75rem;
   font-size: 1rem;
   line-height: 1.5;
   border: 1px solid #ced4da;
-  appearance: none;
+  border-radius: 5px;
   margin: 8px 0;
   box-sizing: border-box;
 }
