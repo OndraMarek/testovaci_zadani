@@ -8,8 +8,9 @@
    ```bash
    composer install
    ```
-3. Importujte databázi
-4. Spusťte server:
+3. Importujte databázi (soubor database.sql obsahuje skripty pro vytvoření databázových tabulek a jejich
+naplnění)
+5. Spusťte server:
    ```bash
    php -S localhost:8000 -t public public/index.php
    ```
