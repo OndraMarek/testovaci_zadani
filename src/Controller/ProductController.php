@@ -126,8 +126,8 @@ final class ProductController extends AbstractController
                 $product->getCode(),
                 $product->getName(),
                 $product->getPrice(),
-                $product->getBrand() ? $product->getBrand()->getName() : '',
-                $product->getMaterial() ? $product->getMaterial()->getName() : '',
+                $product->getBrand()->getName(),
+                $product->getMaterial()->getName(),
             ]);
         }
 
